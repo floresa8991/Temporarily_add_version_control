@@ -1,0 +1,47 @@
+library(rcompanion)
+groupwiseMean<-data.frame()
+Sum = groupwiseMean(Steps ~ Sex,
+                    data   = Data,
+                    conf   = 0.95,
+                    digits = 3)
+
+Sum
+
+#   Sex  n  Mean  Conf.level  Trad.lower  Trad.upper
+1 female 15 8200       0.95       7530       8870
+2   male 11 7000       0.95       6260       7740
+
+
+Sex  n Mean Conf.level Trad.lower Trad.upper
+1 female 15 8200       0.95       7530       8870
+2   male 11 7000       0.95       6260       7740
+
+
+
+Alternate code:
+  
+  Sum = groupwiseMean(data   = Data,
+                      var    = "Steps",
+                      group  = "Sex",
+                      conf   = 0.95,
+                      digits = 3)
+
+Sum
+
+
+
+library(ggplot2)
+
+ggplot(Sum,                ### The data frame to use.
+       aes(x = Sex,
+           y = Mean)) +
+  geom_errorbar(aes(ymin = Trad.lower,
+                    ymax = Trad.upper),
+                width = 0.05,
+                size  = 0.5) +
+  geom_point(shape = 15,
+             size  = 4) +
+  theme_bw() +
+  theme(axis.title   = element_text(face  = "bold")) +
+  
+  ylab("Mean steps")
